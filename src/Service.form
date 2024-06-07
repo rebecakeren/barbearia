@@ -127,7 +127,7 @@
             </constraints>
             <properties>
               <background color="-16777216"/>
-              <font size="20" style="1"/>
+              <font size="15" style="1"/>
               <foreground color="-1"/>
               <text value="Cadastrar"/>
             </properties>

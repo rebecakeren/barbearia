@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.math.BigDecimal;
 
 public class Service extends JDialog {
     private JPanel servicePanel;
@@ -20,7 +21,7 @@ public class Service extends JDialog {
 
         // Configura o menu pop-up
         JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem1 = new JMenuItem("Agendamento"); // Alterado para "Agendamento"
+        JMenuItem menuItem1 = new JMenuItem("Agendamento");
         JMenuItem menuItem2 = new JMenuItem("Sair");
 
         popupMenu.add(menuItem1);
@@ -30,7 +31,7 @@ public class Service extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new Scheduling(); // Redireciona para a tela de agendamento
+                // new Scheduling(); // Redireciona para a tela de agendamento
             }
         });
 
@@ -38,7 +39,7 @@ public class Service extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new Menu(); // Redireciona para a tela de menu
+                // new Menu(); // Redireciona para a tela de menu
             }
         });
 
@@ -53,20 +54,26 @@ public class Service extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nomeServico = nome.getText();
-                String valorServico = valor.getText();
+                String valorServicoStr = valor.getText();
 
-                if (nomeServico.isEmpty() || valorServico.isEmpty()) {
+                if (nomeServico.isEmpty() || valorServicoStr.isEmpty()) {
                     JOptionPane.showMessageDialog(Service.this, "Todos os campos devem ser preenchidos.", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    try (Connection conn = DatabaseConnection.getConnection()) {
-                        String query = "INSERT INTO service (nome, valor) VALUES (?, ?)";
-                        PreparedStatement stmt = conn.prepareStatement(query);
-                        stmt.setString(1, nomeServico);
-                        stmt.setString(2, valorServico);
-                        stmt.executeUpdate();
+                    try {
+                        BigDecimal valorServico = new BigDecimal(valorServicoStr);
 
-                        JOptionPane.showMessageDialog(Service.this, "Serviço cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                        dispose(); // Fecha a janela de cadastro
+                        try (Connection conn = DatabaseConnection.getConnection()) {
+                            String query = "INSERT INTO servicos (nome, valor) VALUES (?, ?)";
+                            PreparedStatement stmt = conn.prepareStatement(query);
+                            stmt.setString(1, nomeServico);
+                            stmt.setBigDecimal(2, valorServico);
+                            stmt.executeUpdate();
+
+                            JOptionPane.showMessageDialog(Service.this, "Serviço cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                            dispose(); // Fecha a janela de cadastro
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(Service.this, "O valor do serviço deve ser um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(Service.this, "Erro ao acessar o banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
                         ex.printStackTrace();

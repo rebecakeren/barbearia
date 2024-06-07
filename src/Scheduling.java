@@ -24,7 +24,7 @@ class Scheduling extends JDialog {
         setLocationRelativeTo(null);
 
         JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem1 = new JMenuItem("Service");
+        JMenuItem menuItem1 = new JMenuItem("Serviço");
         JMenuItem menuItem2 = new JMenuItem("Sair");
 
         popupMenu.add(menuItem1);

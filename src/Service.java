@@ -18,21 +18,19 @@ public class Service extends JDialog {
         setSize(800, 500);
         setLocationRelativeTo(parent);
 
-        // Configuração do menu popup
+        // Configura o menu pop-up
         JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem1 = new JMenuItem("Menu");
-        JMenuItem menuItem2 = new JMenuItem("Agendamento");
-        JMenuItem menuItem3 = new JMenuItem("Sair");
+        JMenuItem menuItem1 = new JMenuItem("Agendamento"); // Alterado para "Agendamento"
+        JMenuItem menuItem2 = new JMenuItem("Sair");
 
         popupMenu.add(menuItem1);
         popupMenu.add(menuItem2);
-        popupMenu.add(menuItem3);
 
         menuItem1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new Menu();
+                new Scheduling(); // Redireciona para a tela de agendamento
             }
         });
 
@@ -40,14 +38,7 @@ public class Service extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new Scheduling();
-            }
-        });
-
-        menuItem3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
+                new Menu(); // Redireciona para a tela de menu
             }
         });
 

@@ -24,7 +24,7 @@ class Scheduling extends JDialog {
         setLocationRelativeTo(null);
 
         JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem1 = new JMenuItem("Menu");
+        JMenuItem menuItem1 = new JMenuItem("Service");
         JMenuItem menuItem2 = new JMenuItem("Sair");
 
         popupMenu.add(menuItem1);
@@ -34,7 +34,7 @@ class Scheduling extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new Menu();
+                new Service(null);
             }
         });
 
@@ -42,8 +42,10 @@ class Scheduling extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+                new Menu(); // Redireciona para a tela de menu
             }
         });
+
 
         menu.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {

@@ -44,7 +44,7 @@
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="Monospaced" size="28" style="1"/>
+              <font name="Old English Text MT" size="36" style="0"/>
               <foreground color="-16777216"/>
               <horizontalTextPosition value="0"/>
               <text value="Barbearia"/>
@@ -55,7 +55,7 @@
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="DialogInput" size="28" style="3"/>
+              <font name="Old English Text MT" size="36" style="0"/>
               <foreground color="-16777216"/>
               <text value="do Careca"/>
             </properties>
@@ -94,7 +94,7 @@
             <properties>
               <background color="-1"/>
               <enabled value="true"/>
-              <font name="Monospaced" size="28" style="1"/>
+              <font name="Old English Text MT" size="28" style="1"/>
               <foreground color="-1"/>
               <text value="Login"/>
             </properties>
@@ -108,7 +108,7 @@
               <enabled value="true"/>
               <font name="Monospaced" size="20" style="0"/>
               <foreground color="-1"/>
-              <text value="Nome"/>
+              <text value="Nome:"/>
             </properties>
           </component>
           <component id="a2db1" class="javax.swing.JTextField" binding="tfNome">
@@ -128,7 +128,7 @@
               <enabled value="true"/>
               <font name="Monospaced" size="20" style="0"/>
               <foreground color="-1"/>
-              <text value="Senha"/>
+              <text value="Senha:"/>
             </properties>
           </component>
           <component id="39964" class="javax.swing.JPasswordField" binding="pfPassword">

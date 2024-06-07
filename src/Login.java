@@ -36,8 +36,8 @@ public class Login extends JDialog {
                     menu.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(Login.this,
-                            "Invalid username or password",
-                            "Error",
+                            "Nome ou senha inválida.",
+                            "Erro",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }

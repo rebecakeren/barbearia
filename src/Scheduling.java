@@ -4,8 +4,9 @@ import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+
 class Scheduling extends JDialog {
-    private JPanel storePanel;
+    private JPanel schedulingPanel;
     private JLabel menuLabel;
     private JComboBox<String> comboServico;
     private JComboBox<String> comboBarbeiro;
@@ -17,9 +18,9 @@ class Scheduling extends JDialog {
 
     public Scheduling() {
         setTitle("Agendamento");
-        setContentPane(storePanel);
+        setContentPane(schedulingPanel);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(1920, 1080);
+        setSize(1080, 900);
         setLocationRelativeTo(null);
 
         JPopupMenu popupMenu = new JPopupMenu();
@@ -32,6 +33,7 @@ class Scheduling extends JDialog {
         menuItem1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
                 new Menu();
             }
         });
@@ -50,7 +52,7 @@ class Scheduling extends JDialog {
         });
 
         // Initialize storePanel and components
-        storePanel = new JPanel();
+        schedulingPanel = new JPanel();
         comboServico = new JComboBox<>();
         comboBarbeiro = new JComboBox<>();
         dia = new JTextField(10);
@@ -60,17 +62,17 @@ class Scheduling extends JDialog {
         btnAgendar = new JButton("Agendar");
 
         // Adding components to the panel
-        storePanel.add(comboServico);
-        storePanel.add(comboBarbeiro);
-        storePanel.add(new JLabel("Dia:"));
-        storePanel.add(dia);
-        storePanel.add(new JLabel("Mês:"));
-        storePanel.add(mes);
-        storePanel.add(new JLabel("Ano:"));
-        storePanel.add(ano);
-        storePanel.add(new JLabel("Valor:"));
-        storePanel.add(valor);
-        storePanel.add(btnAgendar);
+        schedulingPanel.add(comboServico);
+        schedulingPanel.add(comboBarbeiro);
+        schedulingPanel.add(new JLabel("Dia:"));
+        schedulingPanel.add(dia);
+        schedulingPanel.add(new JLabel("Mês:"));
+        schedulingPanel.add(mes);
+        schedulingPanel.add(new JLabel("Ano:"));
+        schedulingPanel.add(ano);
+        schedulingPanel.add(new JLabel("Valor:"));
+        schedulingPanel.add(valor);
+        schedulingPanel.add(btnAgendar);
 
         // Exemplo de adição de serviços ao combobox (pode ser substituído por dados do banco)
         comboServico.addItem("Serviço 1");

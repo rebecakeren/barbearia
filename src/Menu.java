@@ -6,7 +6,8 @@ import java.awt.event.MouseEvent;
 
 public class Menu extends JFrame {
     private JPanel menuPanel;
-    private JLabel menuLabel;
+    private JLabel menu;
+    private String userType;
 
     public Menu() {
         setTitle("Barbearia do Careca");
@@ -15,33 +16,51 @@ public class Menu extends JFrame {
         setSize(1920, 1080);
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
 
+    public void setUserType(String userType) {
+        this.userType = userType;
+        configureMenu();
+    }
 
-        // Configura o menu pop-up
+    private void configureMenu() {
         JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem1 = new JMenuItem("Agendamento");
-        JMenuItem menuItem2 = new JMenuItem("Sair");
+        JMenuItem menuItemAgendamento = new JMenuItem("Agendamento");
+        JMenuItem menuItemServico = new JMenuItem("Serviço");
+        JMenuItem menuItemSair = new JMenuItem("Sair");
 
-        popupMenu.add(menuItem1);
-        popupMenu.add(menuItem2);
+        popupMenu.add(menuItemAgendamento);
+        if ("BARBEIRO".equalsIgnoreCase(userType)) {
+            popupMenu.add(menuItemServico);
+        }
+        popupMenu.add(menuItemSair);
 
-        menuItem1.addActionListener(new ActionListener() {
+        menuItemAgendamento.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose(); // Fecha a janela atual
                 new Scheduling();
             }
         });
 
-        menuItem2.addActionListener(new ActionListener() {
+        menuItemServico.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new Service(null);
+            }
+        });
+
+        menuItemSair.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
 
-        menuLabel.addMouseListener(new MouseAdapter() {
+        menu.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                popupMenu.show(menuLabel, e.getX(), e.getY());
+                popupMenu.show(menu, e.getX(), e.getY());
             }
         });
     }

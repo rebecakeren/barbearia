@@ -15,6 +15,7 @@ public class Login extends JDialog {
     private JButton btnCadastrar;
     private JPanel loginPanel;
     private Menu menu;
+    private String userType;
 
     public Login(JFrame parent, Menu menu) {
         super(parent);
@@ -33,6 +34,7 @@ public class Login extends JDialog {
                 String password = new String(pfPassword.getPassword());
                 if (authenticate(username, password)) {
                     dispose();
+                    menu.setUserType(userType);
                     menu.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(Login.this,
@@ -63,13 +65,14 @@ public class Login extends JDialog {
 
     private boolean authenticate(String username, String password) {
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "SELECT * FROM usuarios WHERE nome = ? AND senha = ?";
+            String query = "SELECT tipo FROM usuarios WHERE nome = ? AND senha = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, username);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+                userType = rs.getString("tipo");
                 return true;
             } else {
                 return false;

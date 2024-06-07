@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 
 class Scheduling extends JDialog {
     private JPanel schedulingPanel;
-    private JLabel menuLabel;
+    private JLabel menu;
     private JComboBox<String> comboServico;
     private JComboBox<String> comboBarbeiro;
     private JTextField dia;
@@ -20,7 +20,7 @@ class Scheduling extends JDialog {
         setTitle("Agendamento");
         setContentPane(schedulingPanel);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(1080, 900);
+        setSize(900, 500);
         setLocationRelativeTo(null);
 
         JPopupMenu popupMenu = new JPopupMenu();
@@ -45,9 +45,9 @@ class Scheduling extends JDialog {
             }
         });
 
-        menuLabel.addMouseListener(new MouseAdapter() {
+        menu.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                popupMenu.show(menuLabel, e.getX(), e.getY());
+                popupMenu.show(menu, e.getX(), e.getY());
             }
         });
 

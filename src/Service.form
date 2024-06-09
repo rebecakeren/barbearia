@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="a0489" layout-manager="GridLayoutManager" row-count="9" column-count="13" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="ee8e7" layout-manager="GridLayoutManager" row-count="9" column-count="9" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -18,62 +18,87 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="126e4" class="javax.swing.JLabel">
+          <component id="85669" class="javax.swing.JLabel">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="13" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="1" row-span="1" col-span="7" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="Old English Text MT" size="36" style="1"/>
+              <background color="-16777216"/>
+              <font size="40" style="1"/>
               <foreground color="-16777216"/>
               <text value="Serviço"/>
             </properties>
           </component>
-          <vspacer id="e7e36">
+          <vspacer id="2a840">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="12" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="2" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
-          <vspacer id="f980f">
+          <vspacer id="3482e">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="12" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
-          <vspacer id="1f10c">
+          <component id="ca5fc" class="javax.swing.JTextField" binding="nome">
             <constraints>
-              <grid row="6" column="0" row-span="1" col-span="12" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </vspacer>
-          <vspacer id="70322">
-            <constraints>
-              <grid row="8" column="0" row-span="1" col-span="12" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </vspacer>
-          <vspacer id="3d5d">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="13" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </vspacer>
-          <component id="a4e33" class="javax.swing.JTextField" binding="nome">
-            <constraints>
-              <grid row="3" column="8" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="8b58d" class="javax.swing.JTextField" binding="valor">
-            <constraints>
-              <grid row="5" column="8" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="3" column="2" row-span="1" col-span="6" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
             <properties/>
           </component>
-          <component id="91a13" class="javax.swing.JLabel">
+          <component id="3d732" class="javax.swing.JTextField" binding="valor">
             <constraints>
-              <grid row="3" column="1" row-span="1" col-span="7" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="2" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <vspacer id="1e5b5">
+            <constraints>
+              <grid row="4" column="2" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <vspacer id="48fa7">
+            <constraints>
+              <grid row="6" column="2" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="7a7df" class="javax.swing.JButton" binding="btnCadastrar">
+            <constraints>
+              <grid row="7" column="6" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-16777216"/>
+              <font size="15" style="1"/>
+              <foreground color="-1"/>
+              <text value="Cadastrar"/>
+            </properties>
+          </component>
+          <vspacer id="ed225">
+            <constraints>
+              <grid row="8" column="1" row-span="1" col-span="7" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <hspacer id="c990d">
+            <constraints>
+              <grid row="5" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="c8b7a">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="2ded5">
+            <constraints>
+              <grid row="3" column="8" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <component id="e07a9" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Courier New" size="24" style="1"/>
@@ -81,9 +106,9 @@
               <text value="Nome:"/>
             </properties>
           </component>
-          <component id="22614" class="javax.swing.JLabel">
+          <component id="cbcd9" class="javax.swing.JLabel">
             <constraints>
-              <grid row="5" column="1" row-span="1" col-span="7" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Courier New" size="24" style="1"/>
@@ -91,28 +116,15 @@
               <text value="Valor:"/>
             </properties>
           </component>
-          <component id="68a90" class="javax.swing.JButton" binding="btnCadastrar">
+          <component id="e036d" class="javax.swing.JButton" binding="btnCancelar">
             <constraints>
-              <grid row="7" column="10" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <background color="-16777216"/>
               <font size="15" style="1"/>
               <foreground color="-1"/>
-              <hideActionText value="false"/>
-              <horizontalTextPosition value="0"/>
-              <text value="Cadastrar"/>
-            </properties>
-          </component>
-          <component id="5aeb8" class="javax.swing.JButton" binding="btnCancelar">
-            <constraints>
-              <grid row="7" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <background color="-16777216"/>
-              <font size="15" style="1"/>
-              <foreground color="-1"/>
-              <text value="Cancelar"/>
+              <text value="Sair"/>
             </properties>
           </component>
         </children>

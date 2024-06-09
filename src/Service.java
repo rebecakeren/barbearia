@@ -19,7 +19,6 @@ public class Service extends JDialog {
         setSize(800, 500);
         setLocationRelativeTo(parent);
 
-        // Adiciona o listener do botão cadastrar
         btnCadastrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -40,7 +39,7 @@ public class Service extends JDialog {
                             stmt.executeUpdate();
 
                             JOptionPane.showMessageDialog(Service.this, "Serviço cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                            dispose(); // Fecha a janela de cadastro
+                            dispose();
                         }
                     } catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(Service.this, "O valor do serviço deve ser um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);

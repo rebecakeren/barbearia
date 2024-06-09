@@ -22,7 +22,6 @@ public class Scheduling extends JDialog {
         setSize(900, 500);
         setLocationRelativeTo(null);
 
-        // Listener para o campo de texto "servico"
         servico.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -56,7 +55,6 @@ public class Scheduling extends JDialog {
     private void atualizarValorServico() throws SQLException {
         String servicoText = servico.getText();
 
-        // Conecta ao banco de dados e busca o valor do serviço
         try (Connection connection = DatabaseConnection.getConnection()) {
             String sql = "SELECT valor FROM servicos WHERE nome = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -80,24 +78,21 @@ public class Scheduling extends JDialog {
         String mesText = mes.getText();
         String anoText = ano.getText();
 
-        // Verifica se todos os campos estão preenchidos
         if (barbeiroText.isEmpty() || servicoText.isEmpty() || diaText.isEmpty() || mesText.isEmpty() || anoText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos.");
             return;
         }
 
-        // Valida a data
         String dataStr = String.format("%s-%s-%s", anoText, mesText, diaText);
         java.sql.Date dataSql;
         try {
-            java.util.Date dataUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dataStr);
+            java.util.Date dataUtil = new SimpleDateFormat("dd-MM-yyyy").parse(dataStr);
             dataSql = new java.sql.Date(dataUtil.getTime());
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this, "Data inválida. Use o formato YYYY-MM-DD.");
             return;
         }
 
-        // Extrai o valor numérico do texto do JLabel "valor"
         double valorServico;
         try {
             valorServico = Double.parseDouble(valor.getText().replace("R$", "").trim().replace(",", "."));
@@ -106,7 +101,11 @@ public class Scheduling extends JDialog {
             return;
         }
 
-        // Conecta ao banco de dados e insere o agendamento
+        if (!isBarbeiroExistente(barbeiroText)) {
+            JOptionPane.showMessageDialog(this, "O barbeiro não está registrado.");
+            return;
+        }
+
         try (Connection connection = DatabaseConnection.getConnection()) {
             String sql = "INSERT INTO agendamentos (barbeiro, servico, data, usuario, valor) VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -119,6 +118,20 @@ public class Scheduling extends JDialog {
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
                     JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!");
+                }
+            }
+        }
+    }
+
+    private boolean isBarbeiroExistente(String barbeiroNome) throws SQLException {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String sql = "SELECT COUNT(*) AS count FROM usuarios WHERE nome = ? AND tipo = 'BARBEIRO'";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, barbeiroNome);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    resultSet.next();
+                    int count = resultSet.getInt("count");
+                    return count > 0;
                 }
             }
         }

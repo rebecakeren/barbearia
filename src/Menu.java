@@ -38,7 +38,6 @@ public class Menu extends JFrame {
         menuItemAgendamento.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Exibe a tela de agendamento
                 dispose();
                 Scheduling schedulingDialog = new Scheduling();
                 schedulingDialog.setVisible(true);
@@ -48,7 +47,6 @@ public class Menu extends JFrame {
         menuItemServico.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Exibe a tela de serviço
                 dispose();
                 Service serviceDialog = new Service(null);
                 serviceDialog.setVisible(true);

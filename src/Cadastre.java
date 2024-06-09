@@ -21,19 +21,14 @@ public class Cadastre extends JDialog {
         setSize(800, 500);
         setLocationRelativeTo(parent);
 
-
-        // Inicialize e configure o JComboBox
-        comboBox = new JComboBox<>();
         comboBox.addItem("CLIENTE");
         comboBox.addItem("BARBEIRO");
 
-
-        // Adiciona os listeners dos botões
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Fecha a janela atual
-                new Login(parent, new Menu()); // Abre a janela de login
+                dispose();
+                new Login(parent, new Menu());
             }
         });
 
@@ -59,7 +54,7 @@ public class Cadastre extends JDialog {
 
                         JOptionPane.showMessageDialog(Cadastre.this, "Cadastro realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                         new Login(parent, new Menu());
-                        dispose(); // Fecha a janela de cadastro
+                        dispose();
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(Cadastre.this, "Erro ao acessar o banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
                         ex.printStackTrace();

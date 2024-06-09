@@ -17,12 +17,10 @@ public class Login extends JDialog {
     private Menu menu;
     private String userType;
 
-    // Variável estática para armazenar o nome do usuário logado
     private static String loggedUser;
 
     public Login(JFrame parent, Menu menu) {
         super(parent);
-        this.menu = menu;
         setTitle("Login");
         setContentPane(loginPanel);
         setMinimumSize(new Dimension(800, 500));
@@ -36,7 +34,6 @@ public class Login extends JDialog {
                 String username = tfNome.getText();
                 String password = new String(pfPassword.getPassword());
                 if (authenticate(username, password)) {
-                    // Armazena o nome do usuário logado
                     loggedUser = username;
                     dispose();
                     menu.setUserType(userType);
@@ -60,8 +57,8 @@ public class Login extends JDialog {
         btnCadastrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Fecha a janela de login
-                new Cadastre(parent); // Abre a janela de cadastro
+                dispose();
+                new Cadastre(parent);
             }
         });
 
@@ -88,7 +85,6 @@ public class Login extends JDialog {
         }
     }
 
-    // Método para obter o nome do usuário logado
     public static String getLoggedUser() {
         return loggedUser;
     }

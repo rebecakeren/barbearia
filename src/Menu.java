@@ -12,7 +12,7 @@ public class Menu extends JFrame {
     public Menu() {
         setTitle("Barbearia do Careca");
         setContentPane(menuPanel);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1920, 1080);
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -38,16 +38,20 @@ public class Menu extends JFrame {
         menuItemAgendamento.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Fecha a janela atual
-                new Scheduling();
+                // Exibe a tela de agendamento
+                dispose();
+                Scheduling schedulingDialog = new Scheduling();
+                schedulingDialog.setVisible(true);
             }
         });
 
         menuItemServico.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Exibe a tela de serviço
                 dispose();
-                new Service(null);
+                Service serviceDialog = new Service(null);
+                serviceDialog.setVisible(true);
             }
         });
 
@@ -66,6 +70,9 @@ public class Menu extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Menu();
+        SwingUtilities.invokeLater(() -> {
+            Menu menu = new Menu();
+            menu.setVisible(true);
+        });
     }
 }

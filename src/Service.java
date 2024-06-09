@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 
 public class Service extends JDialog {
     private JPanel servicePanel;
-    private JLabel menu;
     private JTextField nome;
     private JTextField valor;
-    private JButton cadastrar;
+    private JButton btnCadastrar;
+    private JButton btnCancelar;
 
     public Service(JFrame parent) {
         setTitle("Cadastro de Serviço");
@@ -19,38 +19,8 @@ public class Service extends JDialog {
         setSize(800, 500);
         setLocationRelativeTo(parent);
 
-        // Configura o menu pop-up
-        JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem1 = new JMenuItem("Agendamento");
-        JMenuItem menuItem2 = new JMenuItem("Sair");
-
-        popupMenu.add(menuItem1);
-        popupMenu.add(menuItem2);
-
-        menuItem1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                // new Scheduling(); // Redireciona para a tela de agendamento
-            }
-        });
-
-        menuItem2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                // new Menu(); // Redireciona para a tela de menu
-            }
-        });
-
-        menu.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                popupMenu.show(menu, e.getX(), e.getY());
-            }
-        });
-
         // Adiciona o listener do botão cadastrar
-        cadastrar.addActionListener(new ActionListener() {
+        btnCadastrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nomeServico = nome.getText();
@@ -79,6 +49,13 @@ public class Service extends JDialog {
                         ex.printStackTrace();
                     }
                 }
+            }
+        });
+
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
             }
         });
 

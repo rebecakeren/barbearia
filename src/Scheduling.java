@@ -4,17 +4,16 @@ import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-
-class Scheduling extends JDialog {
+public class Scheduling extends JDialog {
     private JPanel schedulingPanel;
-    private JLabel menu;
-    private JComboBox<String> comboServico;
-    private JComboBox<String> comboBarbeiro;
+    private JTextField barbeiro;
+    private JTextField servico;
     private JTextField dia;
     private JTextField mes;
     private JTextField ano;
-    private JTextField valor;
+    private JLabel valor;
     private JButton btnAgendar;
+    private JButton btnCancelar;
 
     public Scheduling() {
         setTitle("Agendamento");
@@ -23,162 +22,110 @@ class Scheduling extends JDialog {
         setSize(900, 500);
         setLocationRelativeTo(null);
 
-        JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem1 = new JMenuItem("Serviço");
-        JMenuItem menuItem2 = new JMenuItem("Sair");
-
-        popupMenu.add(menuItem1);
-        popupMenu.add(menuItem2);
-
-        menuItem1.addActionListener(new ActionListener() {
+        // Listener para o campo de texto "servico"
+        servico.addFocusListener(new FocusAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                new Service(null);
+            public void focusLost(FocusEvent e) {
+                try {
+                    atualizarValorServico();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(Scheduling.this, "Erro ao buscar valor do serviço: " + ex.getMessage());
+                }
             }
         });
 
-        menuItem2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                new Menu(); // Redireciona para a tela de menu
-            }
-        });
-
-
-        menu.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                popupMenu.show(menu, e.getX(), e.getY());
-            }
-        });
-
-        // Initialize storePanel and components
-        schedulingPanel = new JPanel();
-        comboServico = new JComboBox<>();
-        comboBarbeiro = new JComboBox<>();
-        dia = new JTextField(10);
-        mes = new JTextField(10);
-        ano = new JTextField(10);
-        valor = new JTextField(10);
-        btnAgendar = new JButton("Agendar");
-
-        // Adding components to the panel
-        schedulingPanel.add(comboServico);
-        schedulingPanel.add(comboBarbeiro);
-        schedulingPanel.add(new JLabel("Dia:"));
-        schedulingPanel.add(dia);
-        schedulingPanel.add(new JLabel("Mês:"));
-        schedulingPanel.add(mes);
-        schedulingPanel.add(new JLabel("Ano:"));
-        schedulingPanel.add(ano);
-        schedulingPanel.add(new JLabel("Valor:"));
-        schedulingPanel.add(valor);
-        schedulingPanel.add(btnAgendar);
-
-        // Exemplo de adição de serviços ao combobox (pode ser substituído por dados do banco)
-        comboServico.addItem("Serviço 1");
-        comboServico.addItem("Serviço 2");
-        comboServico.addItem("Serviço 3");
-
-        // Add action listener to comboServico
-        comboServico.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String selectedService = (String) comboServico.getSelectedItem();
-                fetchServiceValue(selectedService);
-            }
-        });
-
-        // Add action listener to agendar button
         btnAgendar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                registerAppointment();
+                try {
+                    agendar();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(Scheduling.this, "Erro ao conectar ao banco de dados: " + ex.getMessage());
+                }
             }
         });
 
-        setVisible(true);
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
-    private void fetchServiceValue(String serviceName) {
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "SELECT valor FROM servicos WHERE nome = ?";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, serviceName);
-            ResultSet rs = stmt.executeQuery();
+    private void atualizarValorServico() throws SQLException {
+        String servicoText = servico.getText();
 
-            if (rs.next()) {
-                String valorServico = rs.getString("valor");
-                valor.setText(valorServico);
-            } else {
-                valor.setText("Serviço não encontrado");
+        // Conecta ao banco de dados e busca o valor do serviço
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String sql = "SELECT valor FROM servicos WHERE nome = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, servicoText);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        double valorServico = resultSet.getDouble("valor");
+                        valor.setText(String.format("R$ %.2f", valorServico));
+                    } else {
+                        valor.setText("Serviço não encontrado");
+                    }
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            valor.setText("Erro ao acessar o banco de dados");
         }
     }
 
-    private void registerAppointment() {
-        String dayText = dia.getText();
-        String monthText = mes.getText();
-        String yearText = ano.getText();
-        String service = (String) comboServico.getSelectedItem();
-        String barber = (String) comboBarbeiro.getSelectedItem();
-        String price = valor.getText();
+    private void agendar() throws SQLException {
+        String barbeiroText = barbeiro.getText();
+        String servicoText = servico.getText();
+        String diaText = dia.getText();
+        String mesText = mes.getText();
+        String anoText = ano.getText();
 
-        // Validate the fields
-        if (dayText.isEmpty() || monthText.isEmpty() || yearText.isEmpty() || service == null || barber == null || price.isEmpty()) {
+        // Verifica se todos os campos estão preenchidos
+        if (barbeiroText.isEmpty() || servicoText.isEmpty() || diaText.isEmpty() || mesText.isEmpty() || anoText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos.");
             return;
         }
 
+        // Valida a data
+        String dataStr = String.format("%s-%s-%s", anoText, mesText, diaText);
+        java.sql.Date dataSql;
         try {
-            int day = Integer.parseInt(dayText);
-            int month = Integer.parseInt(monthText);
-            int year = Integer.parseInt(yearText);
+            java.util.Date dataUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dataStr);
+            dataSql = new java.sql.Date(dataUtil.getTime());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Data inválida. Use o formato YYYY-MM-DD.");
+            return;
+        }
 
-            // Validate the date
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dateFormat.setLenient(false);
-            dateFormat.parse(dayText + "/" + monthText + "/" + yearText);
+        // Extrai o valor numérico do texto do JLabel "valor"
+        double valorServico;
+        try {
+            valorServico = Double.parseDouble(valor.getText().replace("R$", "").trim().replace(",", "."));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Valor do serviço inválido.");
+            return;
+        }
 
-            // Insert the appointment into the database
-            try (Connection conn = DatabaseConnection.getConnection()) {
-                String query = "INSERT INTO agendamentos (servico, barbeiro, dia, mes, ano, valor, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                PreparedStatement stmt = conn.prepareStatement(query);
-                stmt.setString(1, service);
-                stmt.setString(2, barber);
-                stmt.setInt(3, day);
-                stmt.setInt(4, month);
-                stmt.setInt(5, year);
-                stmt.setString(6, price);
-                stmt.setInt(7, getCurrentUserId()); // Assumindo que você tem um método para obter o ID do usuário logado
+        // Conecta ao banco de dados e insere o agendamento
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String sql = "INSERT INTO agendamentos (barbeiro, servico, data, usuario, valor) VALUES (?, ?, ?, ?, ?)";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, barbeiroText);
+                statement.setString(2, servicoText);
+                statement.setDate(3, dataSql);
+                statement.setString(4, Login.getLoggedUser());
+                statement.setDouble(5, valorServico);
 
-                int rowsInserted = stmt.executeUpdate();
+                int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
-                    JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso.");
+                    JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!");
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Erro ao acessar o banco de dados.");
             }
-        } catch (NumberFormatException | ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Data inválida.");
         }
     }
 
-    private int getCurrentUserId() {
-        // Implementação para obter o ID do usuário logado
-        // Esta é uma implementação de exemplo. Adapte conforme necessário.
-        return 1; // Retorne o ID do usuário logado
-    }
-
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new Scheduling();
-            }
-        });
+        Scheduling dialog = new Scheduling();
+        dialog.setVisible(true);
     }
 }

@@ -17,12 +17,12 @@ public class Scheduling extends JDialog {
 
     public Scheduling() {
         setTitle("Agendamento");
-        setContentPane(schedulingPanel);
+        setContentPane(getSchedulingPanel());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(900, 500);
         setLocationRelativeTo(null);
 
-        servico.addFocusListener(new FocusAdapter() {
+        getServico().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 try {
@@ -33,7 +33,7 @@ public class Scheduling extends JDialog {
             }
         });
 
-        btnAgendar.addActionListener(new ActionListener() {
+        getBtnAgendar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -44,7 +44,7 @@ public class Scheduling extends JDialog {
             }
         });
 
-        btnCancelar.addActionListener(new ActionListener() {
+        getBtnCancelar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -52,8 +52,81 @@ public class Scheduling extends JDialog {
         });
     }
 
+    // Atributos privados
+    private JPanel getSchedulingPanel() {
+        return schedulingPanel;
+    }
+
+    private void setSchedulingPanel(JPanel schedulingPanel) {
+        this.schedulingPanel = schedulingPanel;
+    }
+
+    private JTextField getBarbeiro() {
+        return barbeiro;
+    }
+
+    private void setBarbeiro(JTextField barbeiro) {
+        this.barbeiro = barbeiro;
+    }
+
+    private JTextField getServico() {
+        return servico;
+    }
+
+    private void setServico(JTextField servico) {
+        this.servico = servico;
+    }
+
+    private JTextField getDia() {
+        return dia;
+    }
+
+    private void setDia(JTextField dia) {
+        this.dia = dia;
+    }
+
+    private JTextField getMes() {
+        return mes;
+    }
+
+    private void setMes(JTextField mes) {
+        this.mes = mes;
+    }
+
+    private JTextField getAno() {
+        return ano;
+    }
+
+    private void setAno(JTextField ano) {
+        this.ano = ano;
+    }
+
+    private JLabel getValor() {
+        return valor;
+    }
+
+    private void setValor(JLabel valor) {
+        this.valor = valor;
+    }
+
+    private JButton getBtnAgendar() {
+        return btnAgendar;
+    }
+
+    private void setBtnAgendar(JButton btnAgendar) {
+        this.btnAgendar = btnAgendar;
+    }
+
+    private JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    private void setBtnCancelar(JButton btnCancelar) {
+        this.btnCancelar = btnCancelar;
+    }
+
     private void atualizarValorServico() throws SQLException {
-        String servicoText = servico.getText();
+        String servicoText = getServico().getText();
 
         try (Connection connection = DatabaseConnection.getConnection()) {
             String sql = "SELECT valor FROM servicos WHERE nome = ?";
@@ -62,9 +135,9 @@ public class Scheduling extends JDialog {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
                         double valorServico = resultSet.getDouble("valor");
-                        valor.setText(String.format("R$ %.2f", valorServico));
+                        getValor().setText(String.format("R$ %.2f", valorServico));
                     } else {
-                        valor.setText("Serviço não encontrado");
+                        getValor().setText("Serviço não encontrado");
                     }
                 }
             }
@@ -72,11 +145,11 @@ public class Scheduling extends JDialog {
     }
 
     private void agendar() throws SQLException {
-        String barbeiroText = barbeiro.getText();
-        String servicoText = servico.getText();
-        String diaText = dia.getText();
-        String mesText = mes.getText();
-        String anoText = ano.getText();
+        String barbeiroText = getBarbeiro().getText();
+        String servicoText = getServico().getText();
+        String diaText = getDia().getText();
+        String mesText = getMes().getText();
+        String anoText = getAno().getText();
 
         if (barbeiroText.isEmpty() || servicoText.isEmpty() || diaText.isEmpty() || mesText.isEmpty() || anoText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos.");
@@ -95,7 +168,7 @@ public class Scheduling extends JDialog {
 
         double valorServico;
         try {
-            valorServico = Double.parseDouble(valor.getText().replace("R$", "").trim().replace(",", "."));
+            valorServico = Double.parseDouble(getValor().getText().replace("R$", "").trim().replace(",", "."));
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Valor do serviço inválido.");
             return;
@@ -118,6 +191,7 @@ public class Scheduling extends JDialog {
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
                     JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!");
+                    dispose();
                 }
             }
         }
@@ -135,10 +209,5 @@ public class Scheduling extends JDialog {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        Scheduling dialog = new Scheduling();
-        dialog.setVisible(true);
     }
 }

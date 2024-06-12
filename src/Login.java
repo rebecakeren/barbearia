@@ -15,24 +15,25 @@ public class Login extends JDialog {
     private JButton btnCadastrar;
     private JPanel loginPanel;
     private Menu menu;
-    private String userType;
 
+    private String userType;
     private static String loggedUser;
 
     public Login(JFrame parent, Menu menu) {
         super(parent);
+        this.menu = menu;
         setTitle("Login");
-        setContentPane(loginPanel);
+        setContentPane(getLoginPanel());
         setMinimumSize(new Dimension(800, 500));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        btnEntrar.addActionListener(new ActionListener() {
+        getBtnEntrar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = tfNome.getText();
-                String password = new String(pfPassword.getPassword());
+                String username = getTfNome().getText();
+                String password = new String(getPfPassword().getPassword());
                 if (authenticate(username, password)) {
                     loggedUser = username;
                     dispose();
@@ -47,14 +48,14 @@ public class Login extends JDialog {
             }
         });
 
-        btnSair.addActionListener(new ActionListener() {
+        getBtnSair().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
                 dispose();
             }
         });
 
-        btnCadastrar.addActionListener(new ActionListener() {
+        getBtnCadastrar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -64,6 +65,7 @@ public class Login extends JDialog {
 
         setVisible(true);
     }
+
 
     private boolean authenticate(String username, String password) {
         try (Connection conn = DatabaseConnection.getConnection()) {
@@ -85,8 +87,65 @@ public class Login extends JDialog {
         }
     }
 
-    public static String getLoggedUser() {
+    // Métodos Get e Set privados
+    private String getUserType() {
+        return userType;
+    }
+
+    private void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public static String getLoggedUser(){
         return loggedUser;
+    }
+
+    private void setLoggedUser(){
+        this.loggedUser = loggedUser;
+    }
+
+    private JPanel getLoginPanel() {
+        return loginPanel;
+    }
+
+    private JTextField getTfNome() {
+        return tfNome;
+    }
+
+    private void setTfNome(JTextField tfNome) {
+        this.tfNome = tfNome;
+    }
+
+    private JPasswordField getPfPassword() {
+        return pfPassword;
+    }
+
+    private void setPfPassword(JPasswordField pfPassword) {
+        this.pfPassword = pfPassword;
+    }
+
+    private JButton getBtnEntrar() {
+        return btnEntrar;
+    }
+
+    private void setBtnEntrar(JButton btnEntrar) {
+        this.btnEntrar = btnEntrar;
+    }
+
+    private JButton getBtnSair() {
+        return btnSair;
+    }
+
+    private void setBtnSair(JButton btnSair) {
+        this.btnSair = btnSair;
+    }
+
+    private JButton getBtnCadastrar() {
+        return btnCadastrar;
+    }
+
+    private void setBtnCadastrar(JButton btnCadastrar) {
+        this.btnCadastrar = btnCadastrar;
     }
 
     public static void main(String[] args) {

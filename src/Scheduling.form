@@ -193,7 +193,7 @@
             <properties>
               <font name="Courier New" size="24" style="1"/>
               <foreground color="-16777216"/>
-              <text value="00,00:"/>
+              <text value="R$ 00,00"/>
             </properties>
           </component>
           <vspacer id="9a3e9">

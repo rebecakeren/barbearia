@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Cadastre extends JDialog {
     private JPanel cadastrePanel;
-    private JTextField name;
+    private JTextField nome;
     private JTextField fone;
     private JPasswordField password;
     private JButton btnCadastre;
@@ -16,15 +16,15 @@ public class Cadastre extends JDialog {
 
     public Cadastre(JFrame parent) {
         setTitle("Cadastro");
-        setContentPane(cadastrePanel);
+        setContentPane(getCadastrePanel());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(800, 500);
         setLocationRelativeTo(parent);
 
-        comboBox.addItem("CLIENTE");
-        comboBox.addItem("BARBEIRO");
+        getComboBox().addItem("CLIENTE");
+        getComboBox().addItem("BARBEIRO");
 
-        btnCancel.addActionListener(new ActionListener() {
+        getBtnCancel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -32,13 +32,13 @@ public class Cadastre extends JDialog {
             }
         });
 
-        btnCadastre.addActionListener(new ActionListener() {
+        getBtnCadastre().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nome = name.getText();
-                String telefone = fone.getText();
-                String senha = new String(password.getPassword());
-                String tipo = (String) comboBox.getSelectedItem();
+                String nome = getNome().getText();
+                String telefone = getFone().getText();
+                String senha = new String(getPassword().getPassword());
+                String tipo = (String) getComboBox().getSelectedItem();
 
                 if (nome.isEmpty() || telefone.isEmpty() || senha.isEmpty() || tipo == null) {
                     JOptionPane.showMessageDialog(Cadastre.this, "Todos os campos devem ser preenchidos.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -62,11 +62,63 @@ public class Cadastre extends JDialog {
                 }
             }
         });
-
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Cadastre(null));
+    // Atributos privados
+    private JPanel getCadastrePanel() {
+        return cadastrePanel;
+    }
+
+    private void setCadastrePanel(JPanel cadastrePanel) {
+        this.cadastrePanel = cadastrePanel;
+    }
+
+    private JTextField getNome() {
+        return nome;
+    }
+
+    private void setNome(JTextField nome) {
+        this.nome = nome;
+    }
+
+    private JTextField getFone() {
+        return fone;
+    }
+
+    private void setFone(JTextField fone) {
+        this.fone = fone;
+    }
+
+    private JPasswordField getPassword() {
+        return password;
+    }
+
+    private void setPassword(JPasswordField password) {
+        this.password = password;
+    }
+
+    private JButton getBtnCadastre() {
+        return btnCadastre;
+    }
+
+    private void setBtnCadastre(JButton btnCadastre) {
+        this.btnCadastre = btnCadastre;
+    }
+
+    private JComboBox<String> getComboBox() {
+        return comboBox;
+    }
+
+    private void setComboBox(JComboBox<String> comboBox) {
+        this.comboBox = comboBox;
+    }
+
+    private JButton getBtnCancel() {
+        return btnCancel;
+    }
+
+    private void setBtnCancel(JButton btnCancel) {
+        this.btnCancel = btnCancel;
     }
 }

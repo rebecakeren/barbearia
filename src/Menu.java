@@ -6,21 +6,36 @@ import java.awt.event.MouseEvent;
 
 public class Menu extends JFrame {
     private JPanel menuPanel;
-    private JLabel menu;
+    private JLabel menuLabel;
+
     private String userType;
 
     public Menu() {
         setTitle("Barbearia do Careca");
-        setContentPane(menuPanel);
+        setContentPane(getMenuPanel());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1920, 1080);
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-    public void setUserType(String userType) {
+    // Método set privado
+    void setUserType(String userType) {
         this.userType = userType;
         configureMenu();
+    }
+
+    // Métodos Get e Set privados
+    private String getUserType() {
+        return userType;
+    }
+
+    private JPanel getMenuPanel() {
+        return menuPanel;
+    }
+
+    private JLabel getMenuLabel() {
+        return menuLabel;
     }
 
     private void configureMenu() {
@@ -30,7 +45,7 @@ public class Menu extends JFrame {
         JMenuItem menuItemSair = new JMenuItem("Sair");
 
         popupMenu.add(menuItemAgendamento);
-        if ("BARBEIRO".equalsIgnoreCase(userType)) {
+        if ("BARBEIRO".equalsIgnoreCase(getUserType())) {
             popupMenu.add(menuItemServico);
         }
         popupMenu.add(menuItemSair);
@@ -60,17 +75,10 @@ public class Menu extends JFrame {
             }
         });
 
-        menu.addMouseListener(new MouseAdapter() {
+        getMenuLabel().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                popupMenu.show(menu, e.getX(), e.getY());
+                popupMenu.show(getMenuLabel(), e.getX(), e.getY());
             }
-        });
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Menu menu = new Menu();
-            menu.setVisible(true);
         });
     }
 }

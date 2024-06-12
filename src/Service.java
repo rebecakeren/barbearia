@@ -14,16 +14,16 @@ public class Service extends JDialog {
 
     public Service(JFrame parent) {
         setTitle("Cadastro de Serviço");
-        setContentPane(servicePanel);
+        setContentPane(getServicePanel());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(800, 500);
         setLocationRelativeTo(parent);
 
-        btnCadastrar.addActionListener(new ActionListener() {
+        getBtnCadastrar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nomeServico = nome.getText();
-                String valorServicoStr = valor.getText();
+                String nomeServico = getNome().getText();
+                String valorServicoStr = getValor().getText();
 
                 if (nomeServico.isEmpty() || valorServicoStr.isEmpty()) {
                     JOptionPane.showMessageDialog(Service.this, "Todos os campos devem ser preenchidos.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -51,17 +51,52 @@ public class Service extends JDialog {
             }
         });
 
-        btnCancelar.addActionListener(new ActionListener() {
+        getBtnCancelar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
-
-        setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Service(null));
+    // Atributos privados
+    private JPanel getServicePanel() {
+        return servicePanel;
+    }
+
+    private void setServicePanel(JPanel servicePanel) {
+        this.servicePanel = servicePanel;
+    }
+
+    private JTextField getNome() {
+        return nome;
+    }
+
+    private void setNome(JTextField nome) {
+        this.nome = nome;
+    }
+
+    private JTextField getValor() {
+        return valor;
+    }
+
+    private void setValor(JTextField valor) {
+        this.valor = valor;
+    }
+
+    private JButton getBtnCadastrar() {
+        return btnCadastrar;
+    }
+
+    private void setBtnCadastrar(JButton btnCadastrar) {
+        this.btnCadastrar = btnCadastrar;
+    }
+
+    private JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    private void setBtnCancelar(JButton btnCancelar) {
+        this.btnCancelar = btnCancelar;
     }
 }
